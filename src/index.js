@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { Client, IntentsBitField } = require('discord.js');
-
+const { integer, nodeCrypto } = require('random-js');
+const engine = nodeCrypto;
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -61,11 +62,7 @@ client.on('interactionCreate', (interaction) => {
             let result = 0;
 
             for (let i = 0; i < num.value; i++) {
-                var temp = Math.random() * sides;
-                console.log(temp);
-                if (!isNaN(temp)) {
-                    result += Math.floor(temp) + 1;
-                }
+                result += integer(1, sides)(engine);
                 console.log(result);
             }
             console.log(result);
