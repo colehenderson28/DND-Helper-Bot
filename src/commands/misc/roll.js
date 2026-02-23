@@ -88,12 +88,23 @@ module.exports = {
         }
         console.log(sides);
         let result = 0;
+        let individualRolls = [];
 
         for (let i = 0; i < num.value; i++) {
-            result += integer(1, sides)(engine);
+            individualRolls.push(integer(1, sides)(engine));
+            result += individualRolls[i];
             console.log(result);
         }
         console.log(result);
-        interaction.reply(`You rolled a ${result}!`);
+
+        let reply;
+
+        if (num.value == 1) {
+            reply = `You rolled 1 d${sides}. Your result is ${result}!`;
+        }
+        if (num.value > 1) {
+            reply = `You rolled ${num.value} d${sides}s.\n Each roll was ${individualRolls.toString()}\n Your total result is ${result}!`;
+        }
+        interaction.reply(reply);
     },
 };
